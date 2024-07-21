@@ -75,6 +75,13 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        .subtitle2 {
+            font-style: italic;
+            color: rgb(143, 164, 255);
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
         .question {
             margin-bottom: 5px;
             background-color: rgba(255,255,255,0.7);
@@ -119,6 +126,12 @@
         #score-display h2 {
             font-size: 3em;
             margin-top: 10%;
+        }
+        #1score h3 {
+            font-size: 1em;
+            margin-top: 10%;
+            color: #577cd4;
+
         }
         #score-display .score {
             font-size: 6em;
@@ -182,7 +195,11 @@
         <br><br>
         <button onclick="shareScore()">Share your score</button>
         <button onclick="redoTest()">Redo test</button>
+        <p id="subtitle2" >made by @liltober - test your score bigtober.github.io</p>
+
+
     </div>
+    <script defer data-domain="bigtober.github.io" src="https://plausible.io/js/script.js"></script>
 
     <script>
         const questions = [
