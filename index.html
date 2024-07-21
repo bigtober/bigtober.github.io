@@ -3,48 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Adventure Quiz</title>
+    <title>Babyfur Purity Test</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">    
+    
     <style>
-        body {
-            font-family: "Times New Roman", Times, serif;
-            background-color: #f9f5e7;
+        body, html {
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            font-family: "Times New Roman", Times, serif;
             color: #333;
+        }
+        body {
+            background-image: url('bg.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #f9f5e7;
             padding: 20px;
-            border: 1px solid #8b4513;
+            box-sizing: border-box;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 40px;
+            max-width: 420px;
+            width: 420%;
+            
+            height: auto;
+        }
+        .logo:hover {
+            text-align: center;
+
+            animation: slowSpin 4s ease-in-out forwards, flickerGlow 6s linear infinite;
+        }
+        @keyframes slowSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-11deg);
+            }
+        }
+        @keyframes flickerGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 2px rgb(255, 255, 255));
+            }
+            5% {
+                filter: drop-shadow(0 0 4px rgb(255, 255, 255));
+            }
+            5% {
+                filter: drop-shadow(0 0 6px rgb(255, 255, 255));
+            }
+            22% {
+                filter: drop-shadow(0 0 4px rgb(255, 255, 243));
+            }
         }
         h1 {
-            color: #8b4513;
+            color: rgb(8, 37, 167);
             text-align: center;
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-decoration: underline;
+            text-shadow: 2px 2px 4px rgba(32, 127, 187, 0.7);
         }
         .subtitle {
             font-style: italic;
             text-align: center;
             margin-bottom: 20px;
         }
-        .intro {
-            text-align: center;
-            margin-bottom: 20px;
-        }
         .question {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 5px;
+            text-align: left;
         }
         input[type="checkbox"] {
             margin-right: 10px;
-        }
-        #result {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 20px;
         }
         .button-container {
             text-align: center;
@@ -52,45 +90,224 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #f0e8d5;
-            color: #8b4513;
-            border: 1px solid #8b4513;
+            background-color: #1a409a;
+            color: #ffffff;
+            border: 1px solid #112759;
             border-radius: 20px;
             cursor: pointer;
             font-family: "Times New Roman", Times, serif;
             font-size: 1em;
-            margin: 0 10px;
+            margin: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: #416fd9;
+            color: #f0e8d5;
+        }
+        #score-display {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #c9ebff;
+            z-index: 1000;
+            text-align: center;
+            overflow-y: auto;
+        }
+        #score-display h2 {
+            font-size: 3em;
+            margin-top: 10%;
+        }
+        #score-display .score {
+            font-size: 6em;
+            color: #1a409a;
+        }
+        #feedback {
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .question {
+                font-size: 0.9em;
+            }
+            button {
+                font-size: 0.9em;
+                padding: 8px 16px;
+            }
+            #score-display h2 {
+                font-size: 2em;
+            }
+            #score-display .score {
+                font-size: 4em;
+            }
+            #feedback {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>The Official Family Adventure Quiz</h1>
-        <p class="subtitle">Have you ever...</p>
-        <p class="intro">
-            This Family Adventure Quiz serves as a fun way to track your family's experiences.
-            It's a voluntary opportunity for families to bond and for parents to track the growth
-            of their children through shared adventures.
-        </p>
-        <p class="intro">
-            <strong>Note:</strong> This is just for fun. Enjoy reflecting on your family memories!
-        </p>
+        <div style="text-align: center";>
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+    </p>
+        <p class="subtitle">This test is built on personal expierences so it may not fit all your e</p>
+      
+       <p class="subtitle">Caution: This is not a bucket list. Completion of all items on this test will likely result in baby
+        <br>
+        <p class="subtitle">Click on every item you have done:</p>
+
         <div id="quiz"></div>
         <div class="button-container">
+            <p class="subtitle">That's a lot of check boxes.. follow me if you want a part 2 @liltober</p>
+
             <button onclick="calculateScore()">Calculate My Score!</button>
             <button onclick="clearCheckboxes()">Clear checkboxes</button>
         </div>
-        <div id="result"></div>
+    </div>
+    <div id="score-display">
+        <h2>Your score:</h2>
+        <div class="score" id="score-value"></div>
+        <div id="feedback"></div>
+        <br><br>
+        <button onclick="shareScore()">Share your score</button>
+        <button onclick="redoTest()">Redo test</button>
     </div>
 
     <script>
         const questions = [
-            { text: "Visited a zoo", weight: 1 },
-            { text: "Had a family picnic", weight: 1 },
-            { text: "Went camping", weight: 2 },
-            { text: "Visited a museum", weight: 1 },
-            { text: "Played board games", weight: 1 },
-            // ... Add more questions here to reach 100
+            "Bought a diaper online",
+            "Bought diapers in person",
+            "Put on a diaper",
+            "Used a diaper",
+            "Used a diaper past what you probably should",
+            "Leaked a little",
+            "Leaked a LOT",
+            "Made stickies in your diaper",
+        
+            "Bought baby powder",
+            "Bought a buzzy wand",
+            "Bought a diaper that is discontinued",
+            "Bought a onesie",
+            "Bought overalls",
+            "Bought shortalls",
+            "Bought a paci",
+            "Bought a bottle",
+            "Bought something from Abu universe",
+            "Own an abu hat or beanie",
+            "Bought something from Onesie downunder",
+            "Bought something from Tykables",   
+
+            "Made food while padded",
+            "Built legos while padded",
+            "Gone to the movies padded",
+            "Gone to work padded",
+            "Gone to school padded",
+
+            "Wore a diaper without those around you knowing",
+            "Wore a diaper with people around you knowing",
+            "Wore a diaper to a furry con",
+
+            "Wore a diaper for an entire furry con",
+            "Wore a diaper while suiting",
+            "Wore a diaper in a pool",
+            "Wore a diaper in a shower/bath",
+            "Wore a diaper on a flight",
+
+            "Almost got caught wearing a diaper",
+            "Got caught wearing a diaper",
+
+            "Snoofed your own diaper",
+            "Want to snoof someone elses diaper",
+            "Snoofed someone elses diaper",
+            "Had a diaper pail of 2 diapers",
+            "Had a diaper pail of 5+ diapers",
+            "Had a diaper pail of 10+ diapers",
+
+            "Taken a photo of yourself wearing a diaper",
+            "Taken padded pics with friends",
+            "Gone 1 day without using a toilet",
+            "Gone 5 days without using a toilet",
+            "Gone 14 days without using a toilet",
+            "Gone 30 days without using a toilet",
+            "Gone 1+ year without using a toilet",
+
+            "Drank alcohol while padded",
+            "Done some kind of drugs while padded",
+
+            "Peed without someone in the room knowing you did",
+            "Pooped without someone in the room knowing you did",
+
+            "Held in your pee all day so you could pee in a diaper later",
+            "Didn't change for 8 hours",
+            "Didn't change for 24 hours",
+            "Didn't change for 48 hours",
+            "Didn't change for a WEEK?!?",
+
+            "Done the oatmeal trick",
+            "Done the banana trick",
+            "Done the marshmallow trick",
+
+            "Peed in someone elses diaper",
+            "Dated someone who is also a babyfur",
+            "Taken a day off work or studies to wear all day",
+            "Told a non babyfur that you wear diapers",
+            "Turned someone onto diapers",
+
+            "Got 1 commision of your sona wearing a diaper",
+            "Gotten 10 commisions of your sona wearing a diaper",
+            "Gotten 20+ commision of your sona wearing a diaper",
+
+            "Almost broke your diaper due to buzzy wand",
+            "Broke your diaper due to buzzy wand",
+
+            "Had a funny feeling about diapers since young",
+            "Wanted to be kept in diapers",
+
+            "Had a dream being diapered",
+
+            "Leaked in bed due to not wearing a diaper",
+            "Forogt you were not wearing a diaper and peed your pants",
+            "Had someone tease you about your diapers",
+            "Gotten changes in the back of a car",
+            "Gone on a diaper road trip",
+
+            "Had someone complement your diaper irl",
+            "Always wanted to get changed by someone",
+            "Gotten changed by someone",
+            "Gotten changed in a public restroom",
+            "Changed someone elses diaper",
+
+            "Put on a friends diaper",
+            "A friend put on your diaper",
+            "Made a friend through liking diapers",
+            "Drove 3+ hours wearing a diaper",
+
+            "Received diapers as a gift",
+            "Given diapers as a gift",
+            "Post more on your diaper account than your main",
+            "Drank/did Laxatives",
+            "Received an Enema",
+            "Day dreamed about wearing diapers",
+            "Day dreamed about someone else wearing diapers",
+            "Used tape to keep your diaper together",
+            "Brought diapers with you on a trip",
+            "Had TSA search your diapers",
+       
+            "You have padded Telegram stickers",
+            "You are apart of a babyfur groupchat",
+            "Most of your home page is babyfurs",
+
         ];
 
         function generateQuiz() {
@@ -99,33 +316,84 @@
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question';
                 questionDiv.innerHTML = `
-                    <input type="checkbox" id="q${index}" data-weight="${q.weight}">
-                    <label for="q${index}">${index + 1}. ${q.text}</label>
+                    <input type="checkbox" id="q${index}">
+                    <label for="q${index}">${index + 1}. ${q}</label>
                 `;
                 quizContainer.appendChild(questionDiv);
             });
         }
 
         function calculateScore() {
-            let totalScore = 0;
+            let score = questions.length;
             questions.forEach((_, index) => {
-                const checkbox = document.getElementById(`q${index}`);
-                if (checkbox.checked) {
-                    totalScore += parseFloat(checkbox.dataset.weight);
+                if (document.getElementById(`q${index}`).checked) {
+                    score--;
                 }
             });
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `Your Family Adventure Score: ${totalScore}`;
+            document.getElementById('score-value').textContent = score;
+            document.getElementById('feedback').textContent = getFeedback(score);
+            document.getElementById('score-display').style.display = 'block';
+        }
+
+        function getFeedback(score) {
+            if (score >= 95) return "pretty dang low for a babyfur";
+            if (score >= 90) return "you are slowly getting into the community huh?";
+            if (score >= 85) return "Not bad of a score. I lied";
+            if (score >= 80) return "Maybe your just a baby minus the fur?";
+            if (score >= 75) return "Ok ok.. You might be a baby..";
+            if (score >= 70) return "You're quite the baby";
+            if (score >= 65) return "You have little expierence";
+            if (score >= 60) return "You gyattt to check your pants";
+            if (score >= 55) return "You've seen a bit of the diaper side.";
+            if (score >= 50) return "Not bad but their are bigger babyfurs I will say";
+            if (score >= 45) return "Leaky pants";
+            if (score >= 40) return "You've got some stories to tell!";
+            if (score >= 35) return "I ran out of funny catchphrases, doesn't change that you are a babyfur though";
+            if (score >= 30) return "You are a natural at this";
+            if (score >= 25) return "You're in need of a change asap";
+            if (score >= 20) return "WOW that was suprising";
+            if (score >= 15) return "Yep this score proves your stinky";
+            if (score >= 10) return "You def need changes rn";
+            if (score >= 5) return "YOU ARE THE ULTIMATE BABYFUR";
+            return "HUHH, you're in a league of your own!";
         }
 
         function clearCheckboxes() {
             questions.forEach((_, index) => {
                 document.getElementById(`q${index}`).checked = false;
             });
-            document.getElementById('result').textContent = '';
+        }
+
+        function shareScore() {
+            const score = document.getElementById('score-value').textContent;
+            const shareText = `I scored ${score} on the Babyfur Purity Test. Try it out!`;
+            const shareUrl = window.location.href;
+            const fullShareText = `${shareText} ${shareUrl}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Babyfur Purity Test Score',
+                    text: shareText,
+                    url: shareUrl,
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(fullShareText).then(() => {
+                    alert("Share link copied to clipboard!");
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        }
+
+        function redoTest() {
+            clearCheckboxes();
+            document.getElementById('score-display').style.display = 'none';
         }
 
         generateQuiz();
     </script>
+    
 </body>
 </html>
