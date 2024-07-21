@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Adventure Quiz</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: #f9f5e7;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f9f5e7;
+            padding: 20px;
+            border: 1px solid #8b4513;
+        }
+        h1 {
+            color: #8b4513;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .subtitle {
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #result {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #f0e8d5;
+            color: #8b4513;
+            border: 1px solid #8b4513;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Official Family Adventure Quiz</h1>
+        <p class="subtitle">Have you ever...</p>
+        <p class="intro">
+            This Family Adventure Quiz serves as a fun way to track your family's experiences.
+            It's a voluntary opportunity for families to bond and for parents to track the growth
+            of their children through shared adventures.
+        </p>
+        <p class="intro">
+            <strong>Note:</strong> This is just for fun. Enjoy reflecting on your family memories!
+        </p>
+        <div id="quiz"></div>
+        <div class="button-container">
+            <button onclick="calculateScore()">Calculate My Score!</button>
+            <button onclick="clearCheckboxes()">Clear checkboxes</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { text: "Visited a zoo", weight: 1 },
+            { text: "Had a family picnic", weight: 1 },
+            { text: "Went camping", weight: 2 },
+            { text: "Visited a museum", weight: 1 },
+            { text: "Played board games", weight: 1 },
+            // ... Add more questions here to reach 100
+        ];
+
+        function generateQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <input type="checkbox" id="q${index}" data-weight="${q.weight}">
+                    <label for="q${index}">${index + 1}. ${q.text}</label>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            questions.forEach((_, index) => {
+                const checkbox = document.getElementById(`q${index}`);
+                if (checkbox.checked) {
+                    totalScore += parseFloat(checkbox.dataset.weight);
+                }
+            });
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Your Family Adventure Score: ${totalScore}`;
+        }
+
+        function clearCheckboxes() {
+            questions.forEach((_, index) => {
+                document.getElementById(`q${index}`).checked = false;
+            });
+            document.getElementById('result').textContent = '';
+        }
+
+        generateQuiz();
+    </script>
+</body>
+</html>
