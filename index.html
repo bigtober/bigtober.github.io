@@ -482,10 +482,8 @@
         const fullShareText = `${shareText} ${shareUrl}`;
         
         navigator.clipboard.writeText(fullShareText).then(() => {
-            alert("Share text copied to clipboard!");
         }).catch(err => {
             console.error('Failed to copy: ', err);
-            alert("Couldn't copy automatically. Please manually copy this text:\n\n" + fullShareText);
         });
     }
 
@@ -564,7 +562,6 @@
         copyText.select();
         copyText.setSelectionRange(0, 99999); // For mobile devices
         document.execCommand('copy');
-        alert('Copied to clipboard!');
     }
 
     generateQuiz();
