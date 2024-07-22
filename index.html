@@ -94,6 +94,14 @@
             text-align: center;
             margin-top: 20px;
         }
+        .low-opacity-button {
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+
+    .low-opacity-button:hover {
+        opacity: 1;
+    }
         button {
             padding: 10px 20px;
             background-color: #1a409a;
@@ -186,12 +194,15 @@
             padding: 10px;
             border-radius: 5px;
         }
-        .different {
-            background-color: #ffe6e6;
-        }
-        .same {
-            background-color: #e6ffe6;
-        }
+        .comparison-item.same {
+        background-color: #e6ffe6;
+    }
+    .comparison-item.different {
+        background-color: #ffe6e6;
+    }
+    .comparison-item.partial {
+        background-color: #fff0e0; /* Light orange */
+    }
         @media (max-width: 600px) {
             .container {
                 padding: 10px;
@@ -239,10 +250,9 @@
         <div class="score" id="score-value"></div>
         <div id="feedback"></div>
         <br><br>
-        <button onclick="shareScore()">Share your score (comparelink)</button>
+        <button onclick="shareScore()">Share your score</button>
         <button onclick="showCompareModal()">Compare Results</button>
-        <button onclick="redoTest()">Redo test</button>
-        <p id="subtitle2">the lower the score the bigger baby</p>
+        <button onclick="redoTest()" class="low-opacity-button">Redo Test</button>        <p id="subtitle2">the lower the score the bigger baby</p>
         <p id="subtitle2">made by @liltober - test your score bigtober.github.io</p>
     </div>
     
@@ -269,6 +279,7 @@
 
     <script>
         const questions = [
+       
         "Bought a diaper online",
             "Bought diapers in person",
             "Put on a diaper",
@@ -389,36 +400,37 @@
        
             "You have padded Telegram stickers",
             "You are apart of a babyfur groupchat",
-            "Most of your home page is babyfurs",
-        ];
+            "Most of your home page is babyfurs",  
+                ];
 
-        function generateQuiz() {
-            const quizContainer = document.getElementById('quiz');
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question';
-                questionDiv.innerHTML = `
-                    <input type="checkbox" id="q${index}">
-                    <label for="q${index}">${index + 1}. ${q}</label>
-                `;
-                quizContainer.appendChild(questionDiv);
-            });
-        }
+        
+    function generateQuiz() {
+        const quizContainer = document.getElementById('quiz');
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <input type="checkbox" id="q${index}">
+                <label for="q${index}">${index + 1}. ${q}</label>
+            `;
+            quizContainer.appendChild(questionDiv);
+        });
+    }
 
-        function calculateScore() {
-            let score = questions.length;
-            questions.forEach((_, index) => {
-                if (document.getElementById(`q${index}`).checked) {
-                    score--;
-                }
-            });
-            document.getElementById('score-value').textContent = score;
-            document.getElementById('feedback').textContent = getFeedback(score);
-            document.getElementById('score-display').style.display = 'block';
-        }
+    function calculateScore() {
+        let score = questions.length;
+        questions.forEach((_, index) => {
+            if (document.getElementById(`q${index}`).checked) {
+                score--;
+            }
+        });
+        document.getElementById('score-value').textContent = score;
+        document.getElementById('feedback').textContent = getFeedback(score);
+        document.getElementById('score-display').style.display = 'block';
+    }
 
-        function getFeedback(score) {
-            if (score >= 95) return "probably not a babyfur";
+    function getFeedback(score) {
+        if (score >= 95) return "probably not a babyfur";
             if (score >= 90) return "You are slowly getting into the community?";
             if (score >= 85) return "Ok so you may or may not have worn a diaper";
             if (score >= 80) return "Maybe your just a baby minus the fur?";
@@ -445,115 +457,123 @@
             if (score >= 3) return "Why are you taking this test, get on the matt";
             if (score >= 2) return "ok this is an insane score.. may i ask how?";
             return "You're in a league of your own!";
-        }
+    }
 
-        function clearCheckboxes() {
-            questions.forEach((_, index) => {
-                document.getElementById(`q${index}`).checked = false;
-            });
-        }
+    function clearCheckboxes() {
+        questions.forEach((_, index) => {
+            document.getElementById(`q${index}`).checked = false;
+        });
+    }
 
-        function encodeResults() {
-            return btoa(questions.map((_, index) => 
-                document.getElementById(`q${index}`).checked ? '1' : '0'
-            ).join(''));
-        }
+    function encodeResults() {
+        return questions.map((_, index) => 
+            document.getElementById(`q${index}`).checked ? '1' : '0'
+        ).join('');
+    }
 
-        function decodeResults(encodedResults) {
-            return atob(encodedResults).split('').map(char => char === '1');
-        }
+    function decodeResults(encodedResults) {
+        return encodedResults.split('').map(char => char === '1');
+    }
 
-        function shareScore() {
-            const score = document.getElementById('score-value').textContent;
-            const encodedResults = encodeResults();
-            const shareUrl = window.location.href;
-            const shareText = `I scored ${score} on the Babyfur Purity Test. Try it out!`;
-            const fullShareText = `${shareText} ${shareUrl}`;
-            
-            const modalContent = `
-                <h3>Share Your Results</h3>
-                <p>Comparison Code (for friends to compare results):</p>
-                <input type="text" id="compare-code" value="${encodedResults}" readonly>
-                <button onclick="copyToClipboard('compare-code')">Copy Code</button>
-                <br><br>
-                <p>Share Link (to invite others to take the test):</p>
-                <input type="text" id="share-link" value="${fullShareText}" readonly>
-                <button onclick="copyToClipboard('share-link')">Copy Link</button>
-            `;
-            
-            document.getElementById('share-modal-content').innerHTML = modalContent;
-            document.getElementById('share-modal').style.display = 'block';
-        }
+    function shareScore() {
+        const score = document.getElementById('score-value').textContent;
+        const shareUrl = window.location.href;
+        const shareText = `I scored ${score} on the Babyfur Purity Test. Try it out!`;
+        const fullShareText = `${shareText} ${shareUrl}`;
+        
+        navigator.clipboard.writeText(fullShareText).then(() => {
+            alert("Share text copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            alert("Couldn't copy automatically. Please manually copy this text:\n\n" + fullShareText);
+        });
+    }
 
-        function showCompareModal() {
-            document.getElementById('comparison-modal').style.display = 'block';
-        }
+    function showCompareModal() {
+        const encodedResults = encodeResults();
+        const modalContent = `
+            <h3>Compare Results</h3>
+            <p>Your comparison code:</p>
+            <input type="text" id="your-code" value="${encodedResults}" readonly>
+            <button onclick="copyToClipboard('your-code')">Copy Code</button>
+            <br><br>
+            <p>Enter your friend's code:</p>
+            <textarea id="friend-results" rows="3" cols="40"></textarea>
+            <br><br>
+            <button onclick="compareResults()">Compare</button>
+            <button onclick="redoTest()" class="low-opacity-button">Redo Test</button>
+            <div id="comparison-results"></div>
+        `;
+        
+        document.querySelector('#comparison-modal .modal-content').innerHTML = modalContent;
+        document.getElementById('comparison-modal').style.display = 'block';
+    }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+    function compareResults() {
+        const myResults = questions.map((_, index) => 
+            document.getElementById(`q${index}`).checked
+        );
+        const friendEncodedResults = document.getElementById('friend-results').value;
+        const friendResults = decodeResults(friendEncodedResults);
 
-        function copyToClipboard(elementId) {
-            const copyText = document.getElementById(elementId);
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand('copy');
-            
-            // Visual feedback
-            const originalText = copyText.nextElementSibling.innerText;
-            copyText.nextElementSibling.innerText = 'Copied!';
-            setTimeout(() => {
-                copyText.nextElementSibling.innerText = originalText;
-            }, 2000);
-        }
+        let comparisonHtml = '<h4>Comparison Results:</h4>';
+        let sameCount = 0;
+        let differentCount = 0;
 
-        function compareResults() {
-            const myResults = questions.map((_, index) => 
-                document.getElementById(`q${index}`).checked
-            );
-            const friendEncodedResults = document.getElementById('friend-results').value;
-            const friendResults = decodeResults(friendEncodedResults);
-
-            let comparisonHtml = '<h4>Comparison Results:</h4>';
-            let sameCount = 0;
-            let differentCount = 0;
-
-            questions.forEach((question, index) => {
-                if (myResults[index] === friendResults[index]) {
-                    sameCount++;
-                } else {
-                    differentCount++;
-                    comparisonHtml += `
-                        <div class="comparison-item different">
-                            <strong>${index + 1}. ${question}</strong><br>
-                            You: ${myResults[index] ? 'Yes' : 'No'}<br>
-                            Friend: ${friendResults[index] ? 'Yes' : 'No'}
-                        </div>
-                    `;
-                }
-            });
-
-            comparisonHtml = `
-                <p>You and your friend answered ${sameCount} questions the same way and ${differentCount} questions differently.</p>
-                <h4>Differences:</h4>
-            ` + comparisonHtml;
-
-            document.getElementById('comparison-results').innerHTML = comparisonHtml;
-        }
-
-        function redoTest() {
-            clearCheckboxes();
-            document.getElementById('score-display').style.display = 'none';
-        }
-
-        generateQuiz();
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
+        questions.forEach((question, index) => {
+            if (myResults[index] === friendResults[index]) {
+                sameCount++;
+                comparisonHtml += `
+                    <div class="comparison-item ${myResults[index] ? 'same' : 'different'}">
+                        <strong>${index + 1}. ${question}</strong><br>
+                        You and your friend both ${myResults[index] ? 'did' : 'did not do'} this.
+                    </div>
+                `;
+            } else {
+                differentCount++;
+                comparisonHtml += `
+                    <div class="comparison-item partial">
+                        <strong>${index + 1}. ${question}</strong><br>
+                        You: ${myResults[index] ? 'Yes' : 'No'}<br>
+                        Friend: ${friendResults[index] ? 'Yes' : 'No'}
+                    </div>
+                `;
             }
+        });
+
+        comparisonHtml = `
+            <p>You and your friend answered ${sameCount} questions the same way and ${differentCount} questions differently.</p>
+            <h4>Results:</h4>
+        ` + comparisonHtml;
+
+        document.getElementById('comparison-results').innerHTML = comparisonHtml;
+    }
+
+    function redoTest() {
+        clearCheckboxes();
+        document.getElementById('score-display').style.display = 'none';
+        closeModal('comparison-modal');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function copyToClipboard(elementId) {
+        const copyText = document.getElementById(elementId);
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand('copy');
+        alert('Copied to clipboard!');
+    }
+
+    generateQuiz();
+
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = 'none';
         }
+    }
     </script>
 </body>
 </html>
